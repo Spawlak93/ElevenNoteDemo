@@ -1,0 +1,140 @@
+﻿@model IEnumerable<ElevenNoteDemo.Models.NoteListItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab1">Tab 1</a></li>
+    <li><a data-toggle="tab" href="#tab2">Tab 2</a></li>
+    <li><a data-toggle="tab" href="#tab3">Tab 3</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="tab1" class="tab-pane fade in active">
+        <h3>Tab 1</h3>
+        <p>Content for tab 1.</p>
+    </div>
+    <div id="tab2" class="tab-pane fade">
+        <h3>Tab 2</h3>
+        <p>Content for tab 2.</p>
+    </div>
+    <div id="tab3" class="tab-pane fade">
+        <h3>Tab 3</h3>
+        <p>Content for tab 3.</p>
+    </div>
+</div>
+
+<div class="LeatherBack">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 col-sm-6 card-container">
+            <div class="note-card">
+                <div class="note-title">
+                    @Html.ActionLink(item.Title, "Details", new { id = item.NoteId }@*, new { @class = "col-md-11" }*@)
+                    @Html.DisplayFor(modelItem => item.IsStarred, new { id = item.NoteId })
+                </div>
+
+                <div class="note-body">
+                    <div class="note-date">
+                        @Html.DisplayFor(modelItem => item.CreatedUtc)
+                    </div>
+
+                    @Html.DisplayFor(modelItem => item.Category)
+
+                    @*<div class="note-body-content text-center">
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </div>*@
+
+                    <div class="note-options text-right">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.NoteId })
+                        <a href="/Note/Delete/@item.NoteId">
+                            <img src="~/Content/Assets/TrashCan.png" class="TrashCan" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NoteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStarred)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedUtc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsStarred, new { id = item.NoteId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedUtc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.NoteId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.NoteId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.NoteId })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts {
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $("i[data-toggle='star']")
+                .css({ "cursor": "pointer" })
+                .click(function (e) {
+                    var target = $(e.target);
+                    var noteId = target.attr("data-id");
+                    var starSet = target.hasClass("glyphicon-star");
+
+                    $.ajax({
+                        method: starSet ? "DELETE" : "PUT",
+                        url: "/api/note/" + noteId + "/star",
+                        data: null
+                    })
+                        .done(function (r) {
+                            target.removeClass();
+                            target.addClass("glyphicon " + (starSet ? "glyphicon-star-empty" : "glyphicon-star"));
+                        })
+                        .fail(function (r) {
+                            alert("Failed to change star status");
+                        });
+                });
+        });
+    </script>
+}
