@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url('Assets/Stone.jpg');
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -22,6 +23,50 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.note-board {
+    background-image: url('Assets/CorkBoard.jpg');
+    border: 5px solid black;
+    /*height: 500px;*/
+    display: flex;
+    padding-top: 2em;
+}
+
+.note-card {
+    border: 1px solid black;
+    min-height: 200px;
+    margin-bottom: 2em;
+    border-radius: 2em;
+    background-image: url('Assets/Paper.jpg');
+    text-align: center;
+    overflow:hidden;
+}
+
+
+.note-tools {
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+}
+
+.note-created {
+
+}
+
+.note-head {
+    background-color: blue;
+    color: white;    
+}
+
+    .note-head a {
+        color: white;
+    }
+
+        .note-head a:hover{
+            text-decoration: none;
+            font-weight: bold;
+        }
 
 
 

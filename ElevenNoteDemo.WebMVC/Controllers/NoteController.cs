@@ -17,6 +17,9 @@ namespace ElevenNoteDemo.WebMVC.Controllers
         {
             var service = CreateNoteService();
             var model = service.GetNotes();
+
+            ViewBag.Categories = new CategoryService().GetCategories();
+
             return View(model);
         }
         //Get: Note/Detail/{id}
