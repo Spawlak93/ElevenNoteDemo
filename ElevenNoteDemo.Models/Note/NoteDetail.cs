@@ -7,16 +7,22 @@ using System.Threading.Tasks;
 
 namespace ElevenNoteDemo.Models
 {
-    public class NoteListItem
+    public class NoteDetail
     {
         public int NoteId { get; set; }
         public string Title { get; set; }
-        [Display(Name ="Created")]
+        public string Content { get; set; }
+        [Display(Name = "Created")]
         public DateTimeOffset CreatedUtc { get; set; }
+        [Display(Name = "Modified")]
+        public DateTimeOffset? ModifiedUtc { get; set; }
 
-        public string Category { get; set; }
+        [Display(Name = "Category")]
+        public string CategoryName { get; set; }
 
-        [UIHint("Starred")]
+        public int CategoryId { get; set; }
+
         public bool IsStarred { get; set; }
+
     }
 }

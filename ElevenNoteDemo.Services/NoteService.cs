@@ -52,7 +52,8 @@ namespace ElevenNoteDemo.Services
                                     Title = e.Title,
                                     IsStarred = e.IsStarred,
                                     CreatedUtc = e.CreatedUtc,
-                                    Category = e.CategoryId + " " + e.Category.Name
+                                    CategoryName = e.Category.Name,
+                                    CategoryId = e.CategoryId
                                 }
                         );
 
@@ -77,7 +78,9 @@ namespace ElevenNoteDemo.Services
                         Content = entity.Content,
                         CreatedUtc = entity.CreatedUtc,
                         ModifiedUtc = entity.ModifiedUtc,
-                        Category = entity.CategoryId + " " + entity.Category.Name
+                        CategoryName = entity.Category.Name,
+                        CategoryId = entity.CategoryId,
+                        IsStarred = entity.IsStarred
                     };
             }
         }

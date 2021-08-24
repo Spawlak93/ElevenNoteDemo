@@ -30,7 +30,7 @@ namespace ElevenNoteDemo.WebMVC.Controllers.WebAPI
                     NoteId = detail.NoteId,
                     Title = detail.Title,
                     Content = detail.Content,
-                    CategoryId = int.Parse(detail.Category.Split(' ')[0]),
+                    CategoryId = detail.CategoryId,
                     IsStarred = newState
                 };
 

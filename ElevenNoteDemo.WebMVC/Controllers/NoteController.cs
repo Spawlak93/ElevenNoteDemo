@@ -31,6 +31,7 @@ namespace ElevenNoteDemo.WebMVC.Controllers
         //Get: Note/Create
         public ActionResult Create()
         {
+            PopulateCategories();
             return View();
         }
         
@@ -40,7 +41,10 @@ namespace ElevenNoteDemo.WebMVC.Controllers
         public ActionResult Create(NoteCreate model)
         {
             if(!ModelState.IsValid)
+            {
+                PopulateCategories();
                 return View(model);
+            }
 
             var service = CreateNoteService();
             if(service.CreateNote(model))
@@ -50,6 +54,7 @@ namespace ElevenNoteDemo.WebMVC.Controllers
             }
 
             ModelState.AddModelError("", "Note could not be created.");
+            PopulateCategories();
             return View(model);
         }
         //Get: Note/Edit/{id}
@@ -62,8 +67,11 @@ namespace ElevenNoteDemo.WebMVC.Controllers
                 {
                     NoteId = detail.NoteId,
                     Title = detail.Title,
-                    Content = detail.Content
+                    Content = detail.Content,
+                    CategoryId = detail.CategoryId,
+                    IsStarred = detail.IsStarred
                 };
+            PopulateCategories();
             return View(model);
         }
 
@@ -77,6 +85,7 @@ namespace ElevenNoteDemo.WebMVC.Controllers
             if (model.NoteId != id)
             {
                 ModelState.AddModelError("", "Id Mismatch");
+                PopulateCategories();
                 return View(model);
             }
 
@@ -89,6 +98,7 @@ namespace ElevenNoteDemo.WebMVC.Controllers
             }
 
             ModelState.AddModelError("", "Your note could not be updated.");
+            PopulateCategories();
             return View(model);
         }
 
@@ -120,6 +130,16 @@ namespace ElevenNoteDemo.WebMVC.Controllers
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             return new NoteService(userId);
+        }
+
+        private void PopulateCategories()
+        {
+            ViewBag.CategoryIds = new SelectList(new CategoryService().GetCategories(), "CategoryId", "Name");
+        }
+
+        private void PopulateCategories(int id)
+        {
+            ViewBag.CategoryIds = new SelectList(new CategoryService().GetCategories(), "CategoryId", "Name", id);
         }
     }
 }

@@ -52,7 +52,8 @@ namespace ElevenNoteDemo.Services
                     Notes = entity.Notes.Select(e => new Models.NoteListItem()
                     {
                         Title = e.Title,
-                        Category = e.Category.CategoryId + " " + e.Category.Name,
+                        CategoryName = e.Category.Name,
+                        CategoryId = e.CategoryId,
                         CreatedUtc = e.CreatedUtc,
                         NoteId = e.NoteId
                     }).ToList()
